@@ -20,7 +20,7 @@ YFLAGS = -y -p pcap_
 PACKET_DIR = packetNTx
 INSTALL_DIR = ${SYSTEMROOT}\system32
 
-CFLAGS = -I ../libpcap -I ../libpcap/bpf -I ../libpcap/lbl \
+CFLAGS = $(DDKINCLUDE) -I ../libpcap -I ../libpcap/bpf -I ../libpcap/lbl \
 	-I ../libpcap/Win32/Include -I../libpcap/Win32/Include/ipv6kit \
 	-I ../../common -I ../Win32-Extensions \
 	-I ../../../Airpcap_DevPack/include \
@@ -29,9 +29,10 @@ CFLAGS = -I ../libpcap -I ../libpcap/bpf -I ../libpcap/lbl \
 	-DSIZEOF_CHAR=1 -DSIZEOF_SHORT=2 -DSIZEOF_INT=4 -DSIZEOF_LONG_LONG=8 -DWPCAP -D'_U_=' \
 	-DHAVE_SNPRINTF -DHAVE_VSNPRINTF \
 	-DSIZEOF_LONG_LONG=8 \
-	-DHAVE_REMOTE -DHAVE_AIRPCAP_API \
+	-DHAVE_REMOTE \
 	-DHAVE_TC_API \
 	-DHAVE_ADDRINFO \
+	-DHAVE___ATTRIBUTE__ \
 	-mno-cygwin -shared ${OPTFLAGS}
 LDFLAGS = -Wl,--out-implib,../lib/libwpcap.a
 LIBS = -L ../../${PACKET_DIR}/DLL/Project -lPacket -lws2_32
@@ -45,7 +46,6 @@ OBJS = ../libpcap/bpf/net/bpf_filter.o \
 	../libpcap/Win32/Src/getnetent.o \
 	../libpcap/Win32/Src/getservent.o \
 	../libpcap/grammar.o \
-  ../libpcap/Win32/Src/getaddrinfo.o \
 	../libpcap/inet.o \
 	../libpcap/Win32/Src/inet_aton.o \
 	../libpcap/Win32/Src/inet_net.o \

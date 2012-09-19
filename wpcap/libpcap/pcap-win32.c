@@ -38,7 +38,7 @@ static const char rcsid[] _U_ =
 
 #include <pcap-int.h>
 #include <Packet32.h>
-#ifdef __MINGW32__
+#if defined(__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR)
 #include <ddk/ndis.h>
 #else /*__MINGW32__*/
 #include <ntddndis.h>
@@ -47,7 +47,7 @@ static const char rcsid[] _U_ =
 #include <dagnew.h>
 #include <dagapi.h>
 #endif /* HAVE_DAG_API */
-#ifdef __MINGW32__
+#if defined(__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR)
 int* _errno();
 #define errno (*_errno())
 #endif /* __MINGW32__ */

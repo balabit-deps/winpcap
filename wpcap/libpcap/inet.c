@@ -73,7 +73,9 @@ struct rtentry;		/* declarations in <net/if.h> */
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
 #else
+#ifndef INT_MAX
 #define INT_MAX		2147483647
+#endif
 #endif
 
 #include "pcap-int.h"
@@ -804,7 +806,7 @@ pcap_lookupdev(errbuf)
 		while(NAdapts--)
 		{
 			strcpy((char*)tUstr, tAstr);
-			(char*)tUstr += strlen(tAstr) + 1;;
+			tUstr = (char*)tUstr + strlen(tAstr) + 1;
 			tAstr += strlen(tAstr) + 1;
 		}
 

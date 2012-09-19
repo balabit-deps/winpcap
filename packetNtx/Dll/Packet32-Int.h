@@ -42,8 +42,8 @@
 #include "NpfImExt.h"
 #endif //HAVE_NPFIM_API
 
-#ifdef __MINGW32__
-#include <ddk/ntddndis.h>
+#if defined (__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR)
+#include <ntddndis.h>
 #else
 #pragma warning( push )
 #pragma warning( disable : 4201 )
