@@ -4,7 +4,7 @@ STAMPDIR=winbuild/stamps
 STAGINGDIR=winbuild/staging
 
 CONFIGURE_OPTS := --prefix $(ZBS_STAGE_DIR)
-
+BUILDSCRIPT=./balabit-vs-build
 all: binary
 
 binary: setup configure build install
@@ -16,19 +16,19 @@ $(STAMPDIR)/stamp-setup:
 
 configure: $(STAMPDIR)/stamp-configure
 $(STAMPDIR)/stamp-configure:
-	./configure $(CONFIGURE_OPTS)
+	$(BUILDSCRIPT) configure $(CONFIGURE_OPTS)
 	touch $@
 
 build: $(STAMPDIR)/stamp-build
 $(STAMPDIR)/stamp-build:
-	$(MAKE)
+	$(BUILDSCRIPT) $(MAKE)
 	touch $@
 
 install:
 	rm -rf $(ZBS_STAGE_DIR)
-	$(MAKE) install
+	$(BUILDSCRIPT) $(MAKE) install
 
 clean:
 	rm -rf $(STAMPDIR) || true
 	rm -rf $(STAGINGDIR) || true
-	-$(MAKE) clean
+	-$(BUILDSCRIPT) $(MAKE) clean

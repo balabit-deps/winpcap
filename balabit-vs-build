@@ -72,6 +72,7 @@ TARGET="$TARGET"
 EOF
     ;;
   make)
+      root=`pwd`
       if [ -z "$1" ];then
           mkdir -p wpcap/lib
           cd packetNtx/Dll/Project
@@ -82,25 +83,36 @@ EOF
       else
           case "$1" in
             install)
+                packetpath=$root/packetNtx/Dll/Project
+                pcappath=$root/wpcap/libpcap
                 mkdir -p $TARGET/bin $TARGET/lib $TARGET/include/pcap/
-                cp packetNtx/Dll/Project/packet.dll $TARGET/bin
-                cp packetNtx/Dll/Project/libpacket.a $TARET/lib
-                cp wpcap/PRJ/wpcap.dll $TARGET/bin
-                cp wpcap/lib/libwpcap.a $TARGET/lib
-                cp -a wpcap/Win32-Extensions/Win32-Extensions.h Common/Packet32.h \
-                  wpcap/libpcap/Win32/Include/bittypes.h wpcap/libpcap/Win32/Include/ip6_misc.h \
-                  wpcap/libpcap/pcap-bpf.h wpcap/libpcap/pcap-namedb.h wpcap/libpcap/pcap-stdinc.h \
-                  wpcap/libpcap/pcap \
+                cp -v $packetpath/packet.dll $root/wpcap/PRJ/wpcap.dll $TARGET/bin
+                for i in $packetpath/libpacket.a $root/wpcap/lib/libwpcap.a; do
+                  b=`basename $i`;
+                  impname=${b##.a}.dll.a
+                  cp -v "$i" "$TARGET/lib/$impname"
+                done
+                cp -v -a \
+                  $root/Common/Packet32.h \
+                  $root/wpcap/Win32-Extensions/Win32-Extensions.h \
+                  $pcappath/Win32/Include/bittypes.h \
+                  $pcappath/Win32/Include/ip6_misc.h \
+                  $pcappath/remote-ext.h \
+                  $pcappath/pcap-bpf.h \
+                  $pcappath/pcap-namedb.h \
+                  $pcappath/pcap-stdinc.h \
+                  $pcappath/pcap.h \
+                  $pcappath/pcap \
                   $TARGET/include/pcap
-                  ;;
+                find $TARGET/lib $TARGET/include -type f | xargs -r chmod -x
+            ;;
             clean)
               cd packetNtx/Dll/Project
               $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
-              cd ../../..
-              cd wpcap/PRJ
+              cd $root/wpcap/PRJ
               $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
+              cd $root
             ;;
-              
             *) echo unknown make option: $1 ;;
           esac
       fi
