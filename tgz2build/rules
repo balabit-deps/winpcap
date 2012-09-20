@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+STAMPDIR=tgz2build/stamps
+#dummy makefile to reduce zbs noise
+all: binary
+
+binary: setup configure build install
+
+setup: $(STAMPDIR)/stamp-setup
+$(STAMPDIR)/stamp-setup:
+	mkdir tgz2build/stamps || true
+	touch $@
+
+configure: $(STAMPDIR)/stamp-configure
+$(STAMPDIR)/stamp-configure:
+	touch $@
+
+build: $(STAMPDIR)/stamp-build
+$(STAMPDIR)/stamp-build:
+	touch $@
+
+install:
+	rm -rf $(ZBS_STAGE_DIR)
+
+clean:
+	rm -rf $(ZBS_STAGE_DIR) || true
+	rm -rf $(STAMPDIR) || true

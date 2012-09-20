@@ -1,0 +1,24 @@
+Source: winpcap
+Section: libs
+Priority: extra
+Maintainer: Balazs Scheidler <bazsi@balabit.hu>
+Build-depends: debhelper (>=4)
+Standards-Version: 3.6.2
+
+Package: libwinpcap
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}
+Description: libwinpcap
+
+Package: libwinpcap-dbg
+Architecture: any
+Section: libdevel
+Depends: libwinpcap (= ${Source-Version})
+Description: libwinpcap-dbg
+
+Package: libwinpcap-dev
+Architecture: any
+Section: libdevel
+Depends: libwinpcap
+Description: libwinpcap-dev

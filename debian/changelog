@@ -1,0 +1,9 @@
+winpcap (4.1.2) syslogngdeps50; urgency=low
+
+  * New upstream version.
+
+ -- Tamas Pal <folti@balabit.com>  Thu, 20 Sep 2012 11:34:51 +0200
+
+Local variables:
+mode: debian-changelog
+End:

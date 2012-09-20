@@ -1,0 +1,115 @@
+#!/bin/sh -ex
+
+ZWACONF=.zwaconf
+
+TARGET=
+
+if [ -f $ZWACONF ]; then
+  . ./$ZWACONF
+fi
+
+if [ -z "$TARGET" ]; then
+  TARGET=$PWD/out
+fi
+
+get_version(){
+      head -1 debian/changelog | sed -e 's/.*(\([^)]*\)).*/\1/'
+}
+
+sed_file() {
+
+    while [ -n "$1" ]; do
+        in=$1.in
+        out=$1
+
+        sed \
+            -e "s,@TARGET@,${TARGET},g" \
+            -e "s/@VERSION@/${VERSION}/g" \
+            $in > $out
+        shift
+    done
+}
+
+cmd=$1
+
+shift
+case "$cmd" in
+  get-version)
+    get_version
+    ;;
+  prepare-dist)
+    VERSION=`get_version`
+    ;;
+  dist-exclude-list|build-exclude-list)
+    echo "out obj *.aqt *.ncb *.suo *.vcproj.*.user"
+    ;;
+  bootstrap)
+    ;;
+  configure)
+    OPTIONS=`getopt -l help,prefix: 'p:' $*`
+    if [ $? -ne 0 ]; then
+      echo "$0: unknown flags..."
+      exit 1
+    fi
+
+    eval set -- "$OPTIONS"
+    while true ; do
+      _arg=$1
+
+      if [ -z "$_arg" ]; then
+        break
+      fi
+      case $1 in
+        --prefix|-p)
+          shift
+          TARGET=`cygpath -u "$1"`
+          ;;
+      esac
+      shift
+    done
+    cat << EOF > $ZWACONF
+TARGET="$TARGET"
+EOF
+    ;;
+  make)
+      if [ -z "$1" ];then
+          mkdir -p wpcap/lib
+          cd packetNtx/Dll/Project
+          $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
+          cd ../../..
+          cd wpcap/PRJ
+          $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
+      else
+          case "$1" in
+            install)
+                mkdir -p $TARGET/bin $TARGET/lib $TARGET/include/pcap/
+                cp packetNtx/Dll/Project/packet.dll $TARGET/bin
+                cp packetNtx/Dll/Project/libpacket.a $TARET/lib
+                cp wpcap/PRJ/wpcap.dll $TARGET/bin
+                cp wpcap/lib/libwpcap.a $TARGET/lib
+                cp -a wpcap/Win32-Extensions/Win32-Extensions.h Common/Packet32.h \
+                  wpcap/libpcap/Win32/Include/bittypes.h wpcap/libpcap/Win32/Include/ip6_misc.h \
+                  wpcap/libpcap/pcap-bpf.h wpcap/libpcap/pcap-namedb.h wpcap/libpcap/pcap-stdinc.h \
+                  wpcap/libpcap/pcap \
+                  $TARGET/include/pcap
+                  ;;
+            clean)
+              cd packetNtx/Dll/Project
+              $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
+              cd ../../..
+              cd wpcap/PRJ
+              $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
+            ;;
+              
+            *) echo unknown make option: $1 ;;
+          esac
+      fi
+    ;;
+  *)
+    echo "Unknown command: $cmd"
+    exit 1
+    ;;
+esac
+exit 0
+
+# vim: ts=2 sw=2 expandtab

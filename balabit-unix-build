@@ -1,0 +1,23 @@
+#!/bin/sh
+
+cmd=$1
+shift
+case "$cmd" in
+  get-version)
+        head -1 debian/changelog | sed -e 's/.*(\([^)]*\)).*/\1/'
+    ;;
+  build-exclude-list|dist-exclude-list|prepare-dist)
+    ;;
+  bootstrap)
+    ;;
+  configure)
+    ;;
+  make)
+    ;;
+  *)
+    echo "Unknown command: $cmd"
+    exit 1
+    ;;
+esac
+
+# vim: ts=2 sw=2 expandtab
