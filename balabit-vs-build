@@ -88,8 +88,8 @@ EOF
                 mkdir -p $TARGET/bin $TARGET/lib $TARGET/include/pcap/
                 cp -v $packetpath/packet.dll $root/wpcap/PRJ/wpcap.dll $TARGET/bin
                 for i in $packetpath/libpacket.a $root/wpcap/lib/libwpcap.a; do
-                  b=`basename $i`;
-                  impname=${b##.a}.dll.a
+                  b=`basename $i .a`;
+                  impname=${b}.dll.a
                   cp -v "$i" "$TARGET/lib/$impname"
                 done
                 cp -v -a \
