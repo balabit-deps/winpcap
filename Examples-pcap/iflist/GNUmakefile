@@ -1,11 +1,10 @@
 # Makefile for cygwin gcc
 # Nate Lawson <nate@rootlabs.com>
 
-PCAP_PATH = ../../lib
-CFLAGS = -g -O -mno-cygwin -I ../../include
+CFLAGS = -g -O -mno-cygwin -I ../../wpcap/libpcap -I ../../wpcap/libpcap/Win32/include
 
 OBJS = iflist.o
-LIBS = -L ${PCAP_PATH} -lwpcap
+LIBS = -L ../../wpcap/PRJ/ -L ../../packetNtx/Dll/Project -lwpcap
 
 all: ${OBJS}
 	${CC} ${CFLAGS} -o iflist.exe ${OBJS} ${LIBS}

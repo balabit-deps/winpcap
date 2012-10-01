@@ -74,11 +74,13 @@ EOF
   make)
       root=`pwd`
       if [ -z "$1" ];then
+          root=$PWD
           mkdir -p wpcap/lib
           cd packetNtx/Dll/Project
           $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
-          cd ../../..
-          cd wpcap/PRJ
+          cd $root/wpcap/PRJ
+          $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
+          cd $root/Examples-pcap/iflist
           $MAKE LEX=flex DDKFLAGS="-I /usr/$build/sys-root/mingw/include/ddk"
       else
           case "$1" in
@@ -86,7 +88,10 @@ EOF
                 packetpath=$root/packetNtx/Dll/Project
                 pcappath=$root/wpcap/libpcap
                 mkdir -p $TARGET/bin $TARGET/lib $TARGET/include/pcap/
-                cp -v $packetpath/packet.dll $root/wpcap/PRJ/wpcap.dll $TARGET/bin
+                cp -v $packetpath/packet.dll \
+                      $root/wpcap/PRJ/wpcap.dll \
+                      $root/Examples-pcap/iflist/iflist.exe \
+                    $TARGET/bin
                 for i in $packetpath/libpacket.a $root/wpcap/lib/libwpcap.a; do
                   b=`basename $i .a`;
                   impname=${b}.dll.a
