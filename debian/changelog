@@ -1,3 +1,9 @@
+winpcap (4.1.2bb50.1) syslogngdeps50; urgency=low
+
+  * Builds iflist.exe too.
+
+ -- Tamas Pal <folti@balabit.com>  Mon, 01 Oct 2012 14:46:47 +0200
+
 winpcap (4.1.2) syslogngdeps50; urgency=low
 
   * New upstream version.
