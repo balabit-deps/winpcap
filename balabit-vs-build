@@ -87,7 +87,7 @@ EOF
             install)
                 packetpath=$root/packetNtx/Dll/Project
                 pcappath=$root/wpcap/libpcap
-                mkdir -p $TARGET/bin $TARGET/lib $TARGET/include/pcap/
+                mkdir -p $TARGET/bin $TARGET/lib $TARGET/include/libpcap/
                 cp -v $packetpath/packet.dll \
                       $root/wpcap/PRJ/wpcap.dll \
                       $root/Examples-pcap/iflist/iflist.exe \
@@ -108,7 +108,7 @@ EOF
                   $pcappath/pcap-stdinc.h \
                   $pcappath/pcap.h \
                   $pcappath/pcap \
-                  $TARGET/include/pcap
+                  $TARGET/include/libpcap
                 find $TARGET/lib $TARGET/include -type f | xargs -r chmod -x
             ;;
             clean)

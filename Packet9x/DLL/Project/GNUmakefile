@@ -5,7 +5,7 @@
 OPTFLAGS = -O
 # I am suspicious of -O2 since it hosed wpcap.dll. To be safe, use -O only
 
-CFLAGS = -I ../../../common -shared -mno-cygwin ${OPTFLAGS}
+CFLAGS = -I ../../../common -shared ${OPTFLAGS}
 LDFLAGS = -Wl,--out-implib,Packet.a
 OBJS = ../Packet32.o
 LIBS = -lwsock32

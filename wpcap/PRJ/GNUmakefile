@@ -33,7 +33,7 @@ CFLAGS = $(DDKINCLUDE) -I ../libpcap -I ../libpcap/bpf -I ../libpcap/lbl \
 	-DHAVE_TC_API \
 	-DHAVE_ADDRINFO \
 	-DHAVE___ATTRIBUTE__ \
-	-mno-cygwin -shared ${OPTFLAGS}
+	-shared ${OPTFLAGS}
 LDFLAGS = -Wl,--out-implib,../lib/libwpcap.a
 LIBS = -L ../../${PACKET_DIR}/DLL/Project -lPacket -lws2_32
 OBJS = ../libpcap/bpf/net/bpf_filter.o \

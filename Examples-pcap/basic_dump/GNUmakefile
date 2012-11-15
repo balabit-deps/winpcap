@@ -2,7 +2,7 @@
 # Nate Lawson <nate@rootlabs.com>
 
 PCAP_PATH = ../../lib
-CFLAGS = -g -O -mno-cygwin -I ../../include
+CFLAGS = -g -O -I ../../include
 
 OBJS = basic_dump.o
 LIBS = -L ${PCAP_PATH} -lwpcap
