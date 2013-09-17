@@ -1,3 +1,10 @@
+winpcap (4.1.2bb50.2) syslogngdeps50; urgency=low
+
+  * remove the -mno-cygwin flag and move the include directory from pcap to
+  * libcap to avoid the recursive including effect
+
+ -- Viktor Juhasz <jviktor@balabit.com>  Tue, 17 Sep 2013 09:56:56 +0200
+
 winpcap (4.1.2bb50.1) syslogngdeps50; urgency=low
 
   * Builds iflist.exe too.
