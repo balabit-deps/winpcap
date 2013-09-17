@@ -1,5 +1,6 @@
+#! /usr/bin/make -f
 
 clean:
-
+	echo "dummy clean target"
 
 .PHONY: clean
