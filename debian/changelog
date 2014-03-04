@@ -1,3 +1,9 @@
+winpcap (4.1.2bb51.1) syslogngdeps51; urgency=low
+
+  * release for syslog-ng-5.1
+
+ -- Laszlo Budai <lbudai@balabit.com>  Tue, 04 Mar 2014 11:58:04 +0100
+
 winpcap (4.1.2bb50.2) syslogngdeps50; urgency=low
 
   * remove the -mno-cygwin flag and move the include directory from pcap to
