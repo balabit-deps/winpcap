@@ -1,3 +1,9 @@
+winpcap (4.1.2bb52.1) syslogng52; urgency=low
+
+  * release for syslog-ng-5.2
+
+ -- jviktor <jviktor@devel-57>  Tue, 10 Jun 2014 13:31:42 +0200
+
 winpcap (4.1.2bb51.1) syslogngdeps51; urgency=low
 
   * release for syslog-ng-5.1
